@@ -37,7 +37,7 @@ The Student Management System is a desktop application developed using Java Swin
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/student-management-system.git
+   git clone https://github.com/AhmedMosad255/Student-Management-System.git
    cd student-management-system
 
 ![Screenshot (118)](https://github.com/user-attachments/assets/73453574-3d2a-42c5-9067-11491c9bd2d2)

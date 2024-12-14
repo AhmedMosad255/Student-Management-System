@@ -6,11 +6,16 @@ The Student Management System is a desktop application developed using Java Swin
 
 ## Features
 
-- **User Interface**: Developed using Java Swing and JFrame to provide a responsive and user-friendly interface.
-- **Database Management**: MySQL is used to store and manage student data efficiently.
-- **Design Patterns**: 
-  - **Factory Pattern**: Used to create student objects dynamically based on their status (Undergraduate, Graduate).
-- **CRUD Operations**: Allows users to perform Create, Read, Update, and Delete operations on student records.
+- **User Interface**: Built using Java Swing and JFrame for an intuitive user experience.
+- **Database Management**: MySQL is used to store student data, course details, and grades.
+- **Design Patterns**:
+  - **Singleton Pattern**:
+    - *Course Registration System*: Ensures that course enrollments are handled by a single instance across the application.
+    - *Grade Processing System*: Guarantees that grade calculations are managed by a single instance.
+  - **Factory Pattern**:
+    - *Course Factory*: Dynamically creates different types of courses (Core, Elective, Lab).
+    - *Student Factory*: Dynamically creates different types of students (Undergraduate, Graduate, Part-time).
+- **CRUD Operations**: Enables users to manage student records and course registrations.
 
 ## Project Structure
 

@@ -44,7 +44,7 @@ public class Menu extends JFrame {
 
 	public Menu() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 623);
+		setBounds(100, 100, 450, 700);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,7 +74,7 @@ public class Menu extends JFrame {
 					.addContainerGap()
 					.addComponent(desktopPane_1, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 					.addGap(26)
-					.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 445, GroupLayout.PREFERRED_SIZE)
+					.addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(37, Short.MAX_VALUE))
 		);
 		
@@ -138,6 +138,21 @@ public class Menu extends JFrame {
 		btnNewButton_3.setBounds(32, 272, 287, 52);
 		desktopPane.add(btnNewButton_3);
 		
+		JButton btnCourses = new JButton("Manage Courses");
+		btnCourses.setForeground(Color.BLACK);
+		btnCourses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				CourseManagementApp courseManagement = new CourseManagementApp();
+				courseManagement.show();
+				dispose();
+				
+			}
+		});
+		btnCourses.setFont(new Font("Tahoma", Font.BOLD, 16));
+		btnCourses.setBounds(32, 348, 287, 52);
+		desktopPane.add(btnCourses);
+		
 		JButton btnNewButton_4 = new JButton("Logout");
 		btnNewButton_4.setForeground(Color.BLACK);
 		btnNewButton_4.addActionListener(new ActionListener() {
@@ -150,7 +165,7 @@ public class Menu extends JFrame {
 			}
 		});
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 16));
-		btnNewButton_4.setBounds(32, 348, 287, 47);
+		btnNewButton_4.setBounds(32, 425, 287, 47);
 		desktopPane.add(btnNewButton_4);
 		
 		JLabel lblNewLabel = new JLabel("What do you want ?");

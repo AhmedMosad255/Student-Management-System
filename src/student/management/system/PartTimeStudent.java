@@ -4,17 +4,13 @@
  */
 package student.management.system;
 
-/**
- *
- * @author Ahmed
- */
-class UndergraduateStudent extends Student {
-    public UndergraduateStudent(String name, String entryNumber, String email, String contactNumber, String homeCity) {
+class PartTimeStudent extends Student {
+    public PartTimeStudent(String name, String entryNumber, String email, String contactNumber, String homeCity) {
         super(name, entryNumber, email, contactNumber, homeCity);
     }
 
     @Override
     public String getStudentType() {
-        return "Undergraduate";
+        return "Part-Time";
     }
 }

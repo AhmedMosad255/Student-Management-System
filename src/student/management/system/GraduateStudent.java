@@ -8,16 +8,13 @@ package student.management.system;
  *
  * @author Ahmed
  */
-public class GraduateStudent extends Student{
-    
+class GraduateStudent extends Student {
     public GraduateStudent(String name, String entryNumber, String email, String contactNumber, String homeCity) {
         super(name, entryNumber, email, contactNumber, homeCity);
     }
 
     @Override
     public String getStudentType() {
-        return "graduate";
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "Graduate";
     }
-    
 }

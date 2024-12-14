@@ -1,11 +1,11 @@
 package student.management.system;
 
 public abstract class Student {
-    protected String name;
-    protected String entryNumber;
-    protected String email;
-    protected String contactNumber;
-    protected String homeCity;
+    private String name;
+    private String entryNumber;
+    private String email;
+    private String contactNumber;
+    private String homeCity;
 
     public Student(String name, String entryNumber, String email, String contactNumber, String homeCity) {
         this.name = name;

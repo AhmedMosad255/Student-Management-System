@@ -1,15 +1,17 @@
 
 package student.management.system;
 
-public class StudentFactory {
-    public static Student createStudent(String studentType, String name, String entryNumber, String email, String contactNumber, String homeCity) {
-        switch (studentType.toLowerCase()) {
+class StudentFactory {
+    public static Student createStudent(String type, String name, String entryNumber, String email, String contactNumber, String homeCity) {
+        switch (type.toLowerCase()) {
             case "undergraduate":
                 return new UndergraduateStudent(name, entryNumber, email, contactNumber, homeCity);
             case "graduate":
                 return new GraduateStudent(name, entryNumber, email, contactNumber, homeCity);
+            case "part-time":
+                return new PartTimeStudent(name, entryNumber, email, contactNumber, homeCity);
             default:
-                throw new IllegalArgumentException("Unknown student type: " + studentType);
+                throw new IllegalArgumentException("Invalid student type: " + type);
         }
     }
 }

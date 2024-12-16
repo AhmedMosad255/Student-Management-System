@@ -29,6 +29,7 @@ The Student Management System is a desktop application developed using Java Swin
     - `Menu.java`: Class for the main menu interface.
     - `UpdateStudent.java`: Class for updating student details.
     - `ViewStudent.java`: Class for viewing student details.
+    - `ManageGrades.java`: Class for adding grades to students, updated to show `JOptionPane` for success or error messages when adding grades to the database.
 
 ## Getting Started
 

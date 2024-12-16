@@ -1,16 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package student.management.system;
 
-class GradeProcessingSystem {
+public class GradeProcessingSystem {
+
+    // Step 1: Create a private static instance
     private static GradeProcessingSystem instance;
 
+    // Step 2: Private constructor to prevent instantiation
     private GradeProcessingSystem() {
-        // Private constructor to prevent instantiation
+        // Initialization code if required
     }
 
+    // Step 3: Public method to provide a single global access point
     public static synchronized GradeProcessingSystem getInstance() {
         if (instance == null) {
             instance = new GradeProcessingSystem();
@@ -18,7 +18,10 @@ class GradeProcessingSystem {
         return instance;
     }
 
+    // Step 4: Method to process grades
     public void processGrade(String studentName, String courseName, String grade) {
-        System.out.println("Processed grade: " + grade + " for student " + studentName + " in course: " + courseName);
+        System.out.println("Processing grade for student: " + studentName);
+        System.out.println("Course: " + courseName + " | Grade: " + grade);
+        // Add actual grade processing logic here, e.g., saving to a database
     }
 }

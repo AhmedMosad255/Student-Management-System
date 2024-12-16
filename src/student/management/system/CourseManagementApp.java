@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package student.management.system;
 
 import java.awt.Color;
@@ -97,6 +93,19 @@ public class CourseManagementApp extends JFrame {
         btnRemoveCourse.setBounds(32, 272, 287, 52);
         desktopPane.add(btnRemoveCourse);
 
+        // Manage Grades Button (New)
+        JButton btnManageGrades = new JButton("Manage Grades");
+        btnManageGrades.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnManageGrades.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CourseManagementApp.this.setVisible(true);  // Hide the current window
+                ManageGrades manageGrades = new ManageGrades();
+                manageGrades.setVisible(true);  // Show the ManageGrades window
+            }
+        });
+        btnManageGrades.setBounds(32, 348, 287, 52);
+        desktopPane.add(btnManageGrades);
+
         // Back to Menu Button
         JButton btnBackToMenu = new JButton("Back to Menu");
         btnBackToMenu.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -107,7 +116,7 @@ public class CourseManagementApp extends JFrame {
                 menu.setVisible(true);  // Show the Menu window
             }
         });
-        btnBackToMenu.setBounds(32, 348, 287, 52);
+        btnBackToMenu.setBounds(32, 420, 287, 52);
         desktopPane.add(btnBackToMenu);
 
         // Layout setup

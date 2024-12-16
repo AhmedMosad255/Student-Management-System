@@ -216,29 +216,41 @@ public class StudentManagementApp extends JFrame {
     }
 
     private void saveStudentToDatabase(Student student) {
+    try {
+        // Establish the database connection
+        con = DriverManager.getConnection("jdbc:mysql://localhost/studentmanagementsystem", "root", "2100401");
+
+        // Update the query to omit the 'student_id' field because it is auto-incremented
+        String query = "INSERT INTO student (name, entrynumber, email, contactnumber, homecity, studenttype) VALUES (?, ?, ?, ?, ?, ?)";
+        pst = con.prepareStatement(query);
+
+        // Set the values for the PreparedStatement
+        pst.setString(1, student.getName());
+        pst.setString(2, student.getEntryNumber());
+        pst.setString(3, student.getEmail());
+        pst.setString(4, student.getContactNumber());
+        pst.setString(5, student.getHomeCity());
+        pst.setString(6, student.getStudentType());
+
+        // Execute the update
+        pst.executeUpdate();
+
+        // Show success message
+        JOptionPane.showMessageDialog(null, "Student added successfully to the database.");
+    } catch (Exception ex) {
+        // Show error message
+        JOptionPane.showMessageDialog(null, ex);
+    } finally {
+        // Close the PreparedStatement and Connection objects
         try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost/studentmanagementsystem", "root", "2100401");
-            String query = "INSERT INTO student (name, entrynumber, email, contactnumber, homecity, studenttype) VALUES (?, ?, ?, ?, ?, ?)";
-            pst = con.prepareStatement(query);
-            pst.setString(1, student.getName());
-            pst.setString(2, student.getEntryNumber());
-            pst.setString(3, student.getEmail());
-            pst.setString(4, student.getContactNumber());
-            pst.setString(5, student.getHomeCity());
-            pst.setString(6, student.getStudentType());
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Student added successfully to the database.");
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        } finally {
-            try {
-                if (pst != null) pst.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+}
+
 
 }
 //    private void saveStudentToDatabase(Student student) {

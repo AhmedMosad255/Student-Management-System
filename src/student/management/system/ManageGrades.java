@@ -17,7 +17,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JOptionPane;
 
-
 public class ManageGrades extends JFrame {
 
     private JPanel contentPane;
@@ -73,8 +72,8 @@ public class ManageGrades extends JFrame {
 
         JButton btnSave = new JButton("Save Grade");
         btnSave.setFont(new Font("Tahoma", Font.BOLD, 16));
-        
-        // Action listener to save grade to database
+
+        // Action listener to save grade to database and process grade
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Capture the input data
@@ -82,8 +81,12 @@ public class ManageGrades extends JFrame {
                 String studentId = textFieldStudentId.getText();
                 String grade = textFieldGrade.getText();
 
-                // Call method to save grade to database
+                // Save grade to database
                 saveGradeToDatabase(courseId, studentId, grade);
+
+                // Process grade using GradeProcessingSystem singleton
+                GradeProcessingSystem gradeProcessor = GradeProcessingSystem.getInstance();
+                gradeProcessor.processGrade(studentId, courseId, grade);
             }
         });
 
@@ -129,32 +132,32 @@ public class ManageGrades extends JFrame {
 
     // Method to save grade into the database
     private void saveGradeToDatabase(String courseId, String studentId, String grade) {
-    try {
-        // Establishing the database connection
-        Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        try {
+            // Establishing the database connection
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        // SQL query to insert data into the grades table
-        String sql = "INSERT INTO grades (course_id, student_id, grade) VALUES (?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, courseId);
-        pstmt.setString(2, studentId);
-        pstmt.setString(3, grade);
+            // SQL query to insert data into the grades table
+            String sql = "INSERT INTO grades (course_id, student_id, grade) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, courseId);
+            pstmt.setString(2, studentId);
+            pstmt.setString(3, grade);
 
-        // Execute the query
-        int rowsAffected = pstmt.executeUpdate();
-        if (rowsAffected > 0) {
-            // Show success message in a dialog box
-            JOptionPane.showMessageDialog(null, "Grade added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            // Show failure message in a dialog box
-            JOptionPane.showMessageDialog(null, "Failed to add grade.", "Error", JOptionPane.ERROR_MESSAGE);
+            // Execute the query
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                // Show success message in a dialog box
+                JOptionPane.showMessageDialog(null, "Grade added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Show failure message in a dialog box
+                JOptionPane.showMessageDialog(null, "Failed to add grade.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            // Close the connection
+            pstmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // Close the connection
-        pstmt.close();
-        conn.close();
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 }

@@ -51,6 +51,7 @@ The Student Management System is a desktop application developed using Java Swin
 ![Screenshot (122)](https://github.com/user-attachments/assets/c2ed8494-a460-46df-a651-ddc588c4d503)
 ![Screenshot (123)](https://github.com/user-attachments/assets/b4700712-4081-41ed-851e-a68ed36f289b)
 ![Screenshot (124)](https://github.com/user-attachments/assets/952c8558-de61-47db-8410-52e00f876bf4)
+![Screenshot 2024-12-18 120045](https://github.com/user-attachments/assets/1f8a245b-779d-4195-9557-70e0e7d3062e)
 
 
 

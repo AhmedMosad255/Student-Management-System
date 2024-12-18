@@ -8,13 +8,14 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 public class ManageGrades extends JFrame {
@@ -23,6 +24,7 @@ public class ManageGrades extends JFrame {
     private JTextField textFieldCourseId;
     private JTextField textFieldStudentId;
     private JTextField textFieldGrade;
+    private GradingContext gradingContext = new GradingContext();
 
     // Database URL and credentials
     private static final String DB_URL = "jdbc:mysql://localhost:3306/studentmanagementsystem"; // Modify the database URL
@@ -44,7 +46,7 @@ public class ManageGrades extends JFrame {
 
     public ManageGrades() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 500, 500);  // Adjusted the window size
         contentPane = new JPanel();
         contentPane.setBackground(Color.GRAY);
         setContentPane(contentPane);
@@ -63,7 +65,7 @@ public class ManageGrades extends JFrame {
         textFieldStudentId.setFont(new Font("Tahoma", Font.PLAIN, 14));
         textFieldStudentId.setColumns(10);
 
-        JLabel lblGrade = new JLabel("Grade:");
+        JLabel lblGrade = new JLabel("Raw Grade:");
         lblGrade.setFont(new Font("Tahoma", Font.BOLD, 14));
 
         textFieldGrade = new JTextField();
@@ -73,20 +75,51 @@ public class ManageGrades extends JFrame {
         JButton btnSave = new JButton("Save Grade");
         btnSave.setFont(new Font("Tahoma", Font.BOLD, 16));
 
+        JButton btnSetPercentage = new JButton("Use Percentage System");
+        btnSetPercentage.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+        JButton btnSetPassFail = new JButton("Use Pass/Fail System");
+        btnSetPassFail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+        // Action listener to set Percentage Grading System
+        btnSetPercentage.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gradingContext.setGradingStrategy(new PercentageGradingSystem());
+                JOptionPane.showMessageDialog(null, "Percentage Grading System Selected.");
+            }
+        });
+
+        // Action listener to set Pass/Fail Grading System
+        btnSetPassFail.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                gradingContext.setGradingStrategy(new PassFailGradingSystem());
+                JOptionPane.showMessageDialog(null, "Pass/Fail Grading System Selected.");
+            }
+        });
+
         // Action listener to save grade to database and process grade
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Capture the input data
-                String courseId = textFieldCourseId.getText();
-                String studentId = textFieldStudentId.getText();
-                String grade = textFieldGrade.getText();
+                try {
+                    // Capture the input data
+                    String courseId = textFieldCourseId.getText();
+                    String studentId = textFieldStudentId.getText();
+                    String rawGrade = textFieldGrade.getText();
 
-                // Save grade to database
-                saveGradeToDatabase(courseId, studentId, grade);
+                    // Calculate the final grade using the selected grading system
+                    String calculatedGrade = gradingContext.calculateGrade(rawGrade);
 
-                // Process grade using GradeProcessingSystem singleton
-                GradeProcessingSystem gradeProcessor = GradeProcessingSystem.getInstance();
-                gradeProcessor.processGrade(studentId, courseId, grade);
+                    // Save grade to database
+                    saveGradeToDatabase(courseId, studentId, calculatedGrade);
+
+                    // Process grade using GradeProcessingSystem singleton
+                    GradeProcessingSystem gradeProcessor = GradeProcessingSystem.getInstance();
+                    gradeProcessor.processGrade(studentId, courseId, calculatedGrade);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Please select a grading system and provide valid inputs.", "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -105,7 +138,11 @@ public class ManageGrades extends JFrame {
                         .addComponent(textFieldGrade, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                         .addComponent(textFieldStudentId, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                         .addComponent(textFieldCourseId, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSave))
+                        .addComponent(btnSave)
+                        .addGroup(gl_contentPane.createSequentialGroup()
+                            .addComponent(btnSetPercentage)
+                            .addGap(10)
+                            .addComponent(btnSetPassFail)))
                     .addContainerGap(30, Short.MAX_VALUE))
         );
         gl_contentPane.setVerticalGroup(
@@ -123,6 +160,10 @@ public class ManageGrades extends JFrame {
                     .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
                         .addComponent(lblGrade)
                         .addComponent(textFieldGrade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addGap(18)
+                    .addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(btnSetPercentage)
+                        .addComponent(btnSetPassFail))
                     .addGap(18)
                     .addComponent(btnSave)
                     .addContainerGap(30, Short.MAX_VALUE))

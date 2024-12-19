@@ -1,4 +1,4 @@
-package student.management.system;
+package singleton;
 
 public class GradeProcessingSystem {
 

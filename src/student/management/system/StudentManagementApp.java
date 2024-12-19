@@ -1,5 +1,6 @@
 package student.management.system;
 
+import factory.StudentFactory;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import observer.StudentAddedObserver;
+import observer.StudentSubject;
 
 public class StudentManagementApp extends JFrame {
 
@@ -31,6 +34,10 @@ public class StudentManagementApp extends JFrame {
     private JTextField scontact;
     private JTextField shome;
     private JComboBox<String> studentTypeComboBox;
+
+    // Observer-related objects
+    private StudentSubject studentSubject;
+    private StudentAddedObserver studentAddedObserver;
 
     Connection con = null;
     PreparedStatement pst = null;
@@ -55,6 +62,11 @@ public class StudentManagementApp extends JFrame {
         contentPane.setBackground(Color.LIGHT_GRAY);
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
+
+        // Initialize observer pattern
+        studentSubject = new StudentSubject();
+        studentAddedObserver = new StudentAddedObserver();
+        studentSubject.registerObserver(studentAddedObserver);
 
         JLabel studentDetails = new JLabel("Student Details");
         studentDetails.setForeground(Color.BLACK);
@@ -114,8 +126,12 @@ public class StudentManagementApp extends JFrame {
                     if (name.isEmpty() || entryNumber.isEmpty() || email.isEmpty() || contactNumber.isEmpty() || homeCity.isEmpty() || studentType == null) {
                         JOptionPane.showMessageDialog(null, "Please fill all the details.");
                     } else {
+                        // Use StudentFactory to create a Student object
                         Student student = StudentFactory.createStudent(studentType, name, entryNumber, email, contactNumber, homeCity);
                         saveStudentToDatabase(student);
+                        
+                        // Notify observer about the new student
+                        studentSubject.addStudent(name, studentType);
                         JOptionPane.showMessageDialog(null, "Student added successfully.");
                         
                         dispose();

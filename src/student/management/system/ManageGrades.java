@@ -1,5 +1,7 @@
 package student.management.system;
 
+import singleton.GradeProcessingSystem;
+import singleton.GradingContext;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
